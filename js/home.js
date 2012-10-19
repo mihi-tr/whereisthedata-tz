@@ -16,35 +16,31 @@ function toggle(el) {
 
 function create_offsetlist() {
   for (var i=0; i<dataset.recordCount/10; i++) {
-    html=["<a class='btn btn-small' href='#' onclick='show_dataset("]
-    html.push(i*10);
-    html.push(")'")
-    html.push("id='ol-"+i+"'>");
-    html.push(i+1);
-    html.push("</a>");
-    $("#ol").append(html.join(""))
+    data={offset:i*10,
+      id:i,
+      number:i+1};
+    $("#ol").append(Mustache.render("<a class='btn btn-small' href='#'\
+    onclick='show_dataset({{offset}})' id='ol-{{id}}'>{{number}}</a>",data))
     }
   }
+
 function show_dataset(offset) {
   dataset.query({size:10, offset:offset}).done(function() {
   $("#requests").empty();
       _.each(dataset.records.models, function(d) {
         $("#ol a").removeClass("active");
         $("#ol-"+(offset/10)).addClass("active");
-        html=["<li onclick='toggle(this)'"];
-        if (d.attributes.delivered) {
-          html.push("class='delivered'");
-        }
-        html.push("id='"+slugify(d.attributes.title)+"'>");
-        html.push(d.attributes.title);
-        html.push("<span class='icon-download'></span>");
-        html.push("<div class='description'>");
-        html.push(d.attributes.description);
-        html.push("</div>");
-        html.push("</li>");
-        $("#requests").append(html.join(""));
-        }) })
+        data={
+          delivered: d.attributes.delivered?true:false,
+          slug: slugify(d.attributes.title),
+          title: d.attributes.title,
+          description: d.attributes.description
+          }
+        $("#requests").append(Mustache.render("<li onclick='toggle(this)' {{#delivered}} class='delivered' {{/delivered}} id='{{slug}}' > {{title}} <span class='icon-download'></span> <div class='description'> {{description}} </div> </li>",data)) 
+  })
+  })
   }
+
 $(document).ready(function() {
   var url="https://docs.google.com/spreadsheet/ccc?key=0AlgwwPNEvkP7dGpPQkZ3ZS1iR18tTzRjTmJZMkVxUnc#gid=0"
   dataset = new recline.Model.Dataset ({
