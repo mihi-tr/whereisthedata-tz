@@ -1,0 +1,4 @@
+exclude : ['README.md', 'CNAME']
+safe: false
+auto: true
+
