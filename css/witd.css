@@ -3,6 +3,18 @@
   margin: 0px;
   }
 
+#requests > li > span {
+  margin-left: 5px;
+  display: none;
+  }
+
+#requests > li:hover > span {
+  display: inline-block;
+  }
+
+#requests > li.expanded > span {
+  display: none;
+  }
 #requests > li {
   font-weight: bold;
   padding-top: 5px;
@@ -25,4 +37,8 @@
 
 #requests > li.expanded > .description {
   display: block;
+  }
+
+#ol {
+  margin-top: 5px;
   }

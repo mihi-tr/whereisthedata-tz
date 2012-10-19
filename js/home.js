@@ -31,17 +31,18 @@ function show_dataset(offset) {
       _.each(dataset.records.models, function(d) {
         $("#ol a").removeClass("active");
         $("#ol-"+(offset/10)).addClass("active");
-        html=["<li onclick='toggle(this)'"]
+        html=["<li onclick='toggle(this)'"];
         if (d.attributes.delivered) {
-          html.push("class='delivered'")
+          html.push("class='delivered'");
         }
-        html.push("id='"+slugify(d.attributes.title)+"'>")
-        html.push(d.attributes.title)
-        html.push("<div class='description'>")
-        html.push(d.attributes.description)
-        html.push("</div>")
-        html.push("</li>")
-        $("#requests").append(html.join(""))
+        html.push("id='"+slugify(d.attributes.title)+"'>");
+        html.push(d.attributes.title);
+        html.push("<span class='icon-download'></span>");
+        html.push("<div class='description'>");
+        html.push(d.attributes.description);
+        html.push("</div>");
+        html.push("</li>");
+        $("#requests").append(html.join(""));
         }) })
   }
 $(document).ready(function() {
